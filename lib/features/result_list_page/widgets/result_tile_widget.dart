@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:test_task/data_models/field_model.dart';
 import 'package:test_task/common/styles/app_styles.dart';
 
+import '../../../data_models/field_cell_model.dart';
+
 class ResultTileWidget extends StatelessWidget {
   final FieldModel fieldModel;
   final String path;
@@ -14,15 +16,22 @@ class ResultTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(path);
+    FieldModel solution = fieldModel;
+
     return GestureDetector(
       onTap: () {
+        for (FieldCellModel cell in solution.shortestPath) {
+          if (cell.cellType != CellType.start &&
+              cell.cellType != CellType.finish) {
+            cell.cellType = CellType.path;
+          }
+        }
         Navigator.pushNamed(
           context,
           '/preview',
           arguments: {
             'path': path,
-            'fieldModel': fieldModel,
+            'fieldModel': solution,
           },
         );
       },

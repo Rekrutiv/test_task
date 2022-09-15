@@ -41,7 +41,7 @@ class _ProcessPageState extends State<ProcessPage> {
       body: BlocListener<ProcessPageBloc, ProcessPageState>(
         listener: (context, state) {
           if (state.progressStage == ProgressStage.fail) {
-            errorMessage = state.errorMessage ?? '';
+            errorMessage = 'error' ;
             showDialog(
                 context: context,
                 builder: (context) {

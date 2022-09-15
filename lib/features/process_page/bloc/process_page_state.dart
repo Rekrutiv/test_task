@@ -4,9 +4,7 @@ part of 'process_page_bloc.dart';
 class ProcessPageState {
   final String progressMessage;
   final double progressValue;
-  final String? assignmentUrl;
   final List<FieldModel>? solvedTasks;
-  final String? errorMessage;
   final ProgressStage progressStage;
   final  List<String>? results;
 
@@ -14,9 +12,7 @@ class ProcessPageState {
   const ProcessPageState({
     this.progressMessage = 'Fetching data...',
     this.progressValue = 0,
-    this.assignmentUrl,
     this.solvedTasks,
-    this.errorMessage,
     this.progressStage = ProgressStage.fetching,
     this.results,
   });
@@ -33,9 +29,7 @@ class ProcessPageState {
     return ProcessPageState(
       progressMessage: progressMessage ?? this.progressMessage,
       progressValue: progressValue ?? this.progressValue,
-      assignmentUrl: assignmentUrl ?? this.assignmentUrl,
       solvedTasks: solvedTasks ?? this.solvedTasks,
-      errorMessage: errorMessage ?? this.errorMessage,
       progressStage: progressStage ?? this.progressStage,
         results:results??this.results
     );

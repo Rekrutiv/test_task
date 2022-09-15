@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:test_task/common/constants.dart';
 import 'package:test_task/data_models/field_cell_model.dart';
 import 'package:test_task/data_models/field_model.dart';
 import 'package:test_task/data_models/task_data.dart';
@@ -64,8 +65,9 @@ class ProcessPageBloc extends Bloc<ProcessPageEvent, ProcessPageState> {
       ));
       List<Map<String, dynamic>> results = _parseSolvedFields();
 
+
       String? errorMessage = await webSparkClient.sendResult(
-        state.assignmentUrl!,
+        baseUrl,
         jsonEncode(results),
       );
       if (errorMessage == null) {
@@ -90,7 +92,6 @@ class ProcessPageBloc extends Bloc<ProcessPageEvent, ProcessPageState> {
       result.add(res['map']);
       paths.add(res['path']);
     }
-    print(paths.first);
     emit(state.copyWith(
       results: paths,
     ));

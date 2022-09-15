@@ -15,57 +15,43 @@ class FieldVisualizationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: _buildGrid(),
-    );
-  }
-
-  List<Widget> _buildGrid() {
-    List<Widget> rows = [];
+    List<FieldCellModel> listCell = [];
     for (int i = 0; i < fieldModel.field.length; i++) {
-      rows.add(_buildRow(fieldModel.field[i]));
+      for (int j = 0; j < fieldModel.field[i].length; j++) {
+        listCell.add(fieldModel.field[i][j]);
+      }
     }
-    return rows;
-  }
 
-  Widget _buildRow(List<FieldCellModel> row) {
-    return Row(
-      children: _buildCells(row),
-    );
-  }
-
-  List<Widget> _buildCells(List<FieldCellModel> row) {
-    List<Widget> cells = [];
-    for (int i = 0; i < row.length; i++) {
-      FieldCellModel currentCell = row[i];
-      print(row[i].cellType);
-
-      cells.add(
-        Container(
-          height: width / fieldModel.field.length,
-          width: width / row.length,
-          decoration: BoxDecoration(
-            color: _chooseCellColor(
-              currentCell.cellType,
+    return GridView.builder(
+        itemCount: listCell.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: fieldModel.field.length,
+        ),
+        itemBuilder: (context, index) {
+          return Container(
+            height: width / fieldModel.field.first.length,
+            width: width / fieldModel.field.first.length,
+            decoration: BoxDecoration(
+              color: _chooseCellColor(
+                listCell[index].cellType,
+              ),
+              border: Border.all(),
             ),
-            border: Border.all(),
-          ),
-          child: Center(
-            child: Text(
-              '(${currentCell.xCoordinate},${currentCell.yCoordinate})',
-              style: TextStyle(
-                fontSize: 22,
-                color: currentCell.cellType == CellType.blocked
-                    ? Colors.white
-                    : Colors.black,
+            child: Center(
+              child: Text(
+                '(${listCell[index].xCoordinate},${listCell[index].yCoordinate})',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: listCell[index].cellType == CellType.blocked
+                      ? Colors.white
+                      : Colors.black,
+                ),
               ),
             ),
-          ),
-        ),
-      );
-    }
-    return cells;
+          );
+        });
   }
+
 
   Color _chooseCellColor(CellType type) {
     late Color cellColor;
