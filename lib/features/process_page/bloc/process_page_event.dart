@@ -1,18 +1,14 @@
 part of 'process_page_bloc.dart';
 
-@immutable
-abstract class ProcessPageEvent {}
 
-class FetchInitialData extends ProcessPageEvent {
-  final String url;
+@freezed
+class ProcessPageEvent with _$ProcessPageEvent {
+  const factory ProcessPageEvent.initial() = Initial;
 
-  FetchInitialData({required this.url});
+  const factory ProcessPageEvent.startTaskSolving(
+      List<TaskData> tasksData) = StartTaskSolving;
+
+  const factory ProcessPageEvent.sendResultToServer() = SendResultToServer;
+
 }
 
-class StartTaskSolving extends ProcessPageEvent {
-  final List<TaskData> tasksData;
-
-  StartTaskSolving({required this.tasksData});
-}
-
-class SendResultToServer extends ProcessPageEvent {}
